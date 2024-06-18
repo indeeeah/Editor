@@ -26,10 +26,11 @@ const elementComponents: Record<
 export default function Viewer({ background }: ViewerProps) {
   const { backgroundSize } = useBackgroundSize();
   const { elements } = useElements();
+  console.log(elements);
 
   return (
     <div
-      className="overflow-hidden rounded-md"
+      className="overflow-scroll rounded-md"
       style={{
         width: backgroundSize.width,
         height: backgroundSize.height,
@@ -38,11 +39,13 @@ export default function Viewer({ background }: ViewerProps) {
       }}
       id="content"
     >
-      {elements.map(element => {
-        const ElementComponent = elementComponents[element.type];
+      <div className="size-full">
+        {elements.map(element => {
+          const ElementComponent = elementComponents[element.type];
 
-        return <ElementComponent key={element.id} props={element} />;
-      })}
+          return <ElementComponent key={element.id} props={element} />;
+        })}
+      </div>
     </div>
   );
 }

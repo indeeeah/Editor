@@ -1,78 +1,72 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 
-import ColorPicker from '@/components/ColorPicker';
+import { uuidv7 } from 'uuidv7';
+
+import Color from '@/components/Edit/Color';
+import Direction from '@/components/Edit/Direction';
+import Size from '@/components/Edit/Size';
+import { ElementType } from '@/libs/elements';
+import { DirectionType, convertDirection, convertSize } from '@/libs/style';
+import { useElements } from '@/providers/ElementProvider';
 
 export default function SectionVariable() {
-  const backgroundColorPickerRef = useRef<HTMLDivElement>(null);
+  const { elements, setElements } = useElements();
 
-  const [backgroundColorPickerOpen, setBackgroundColorPickerOpen] =
-    useState(false);
   const [section, setSection] = useState({
-    backgroundColor: '#FFFFFF',
+    color: '#FFFFFF',
     opacity: 1,
+    direction: 'horizontal',
+    width: '100%',
+    height: 50,
+    paddingTop: 0,
+    paddingRight: 0,
+    paddingBottom: 0,
+    paddingLeft: 0,
+    marginTop: 0,
+    marginRight: 0,
+    marginBottom: 0,
+    marginLeft: 0,
   });
 
-  useEffect(() => {
-    const handleClick = (event: MouseEvent) => {
-      if (
-        backgroundColorPickerRef.current &&
-        !backgroundColorPickerRef.current.contains(event.target as Node)
-      ) {
-        setBackgroundColorPickerOpen(false);
-      }
+  const addSection = () => {
+    const style = {
+      backgroundColor: section.color,
+      opacity: section.opacity,
+      width: convertSize(section.width),
+      height: convertSize(section.height),
+      paddingTop: convertSize(section.paddingTop),
+      paddingRight: convertSize(section.paddingRight),
+      paddingBottom: convertSize(section.paddingBottom),
+      paddingLeft: convertSize(section.paddingLeft),
+      marginTop: convertSize(section.marginTop),
+      marginRight: convertSize(section.marginRight),
+      marginBottom: convertSize(section.marginBottom),
+      marginLeft: convertSize(section.marginLeft),
+      ...convertDirection(section.direction as DirectionType),
     };
 
-    document.addEventListener('click', handleClick);
-
-    return () => {
-      document.removeEventListener('click', handleClick);
-    };
-  }, []);
+    setElements([
+      ...elements,
+      {
+        type: ElementType.Section,
+        id: uuidv7(),
+        style,
+      },
+    ]);
+  };
 
   return (
     <div className="flex flex-col">
       <p className="text-sm font-bold text-blue">color</p>
-      <div className="flex items-center gap-8 pt-4">
-        <div
-          className="flex gap-4"
-          ref={backgroundColorPickerRef}
-          onClick={() => setBackgroundColorPickerOpen(true)}
-        >
-          <div
-            className="size-6 rounded-sm border border-gray-primary"
-            style={{ backgroundColor: section.backgroundColor }}
-          />
-          <span className="text-sm text-gray-600">
-            {section.backgroundColor.toUpperCase()}
-          </span>
-        </div>
-        <div className="flex gap-1">
-          <span className="text-xs text-gray-600">opacity</span>
-          <input
-            type="text"
-            className="w-8 border border-gray-primary text-center text-xs outline-none"
-            placeholder="Opacity"
-            id="opacity"
-            defaultValue={section.opacity * 100}
-            onChange={event => {
-              const opacity = Number(event.target.value) / 100;
-              setSection({ ...section, opacity });
-            }}
-          />
-          <span className="text-xs text-gray-600">%</span>
-        </div>
-      </div>
-      <div
-        className={`absolute pt-2 ${backgroundColorPickerOpen ? 'block' : 'hidden'}`}
-      >
-        <ColorPicker
-          defaultColor={section.backgroundColor}
-          onChange={color => setSection({ ...section, backgroundColor: color })}
-        />
-      </div>
+      <Color variableStyle={section} handleVariableStyle={setSection} />
+      <p className="text-sm font-bold text-blue">direction</p>
+      <Direction variableStyle={section} handleVariableStyle={setSection} />
+      <p className="text-sm font-bold text-blue">size</p>
+      <Size variableStyle={section} handleVariableStyle={setSection} />
       <button
         type="button"
         className="mt-4 rounded-md bg-blue p-1 text-xs text-white"
+        onClick={addSection}
       >
         Add
       </button>

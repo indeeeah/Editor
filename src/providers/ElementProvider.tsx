@@ -15,11 +15,15 @@ import { Element } from '@/types/element';
 type ElementContextType = {
   elements: Element[];
   setElements: Dispatch<SetStateAction<Element[]>>;
+  selectedElement: Element;
+  setSelectedElement: Dispatch<SetStateAction<Element>>;
 };
 
 const ElementContext = createContext<ElementContextType>({
   elements: [],
   setElements: () => {},
+  selectedElement: {} as Element,
+  setSelectedElement: () => {},
 });
 
 export const useElements = () => {
@@ -34,8 +38,12 @@ export const useElements = () => {
 
 export const ElementProvider = ({ children }: { children: ReactNode }) => {
   const [elements, setElements] = useState<Element[]>([]);
+  const [selectedElement, setSelectedElement] = useState<Element>(elements[0]);
 
-  const value = useMemo(() => ({ elements, setElements }), [elements]);
+  const value = useMemo(
+    () => ({ elements, setElements, selectedElement, setSelectedElement }),
+    [elements, selectedElement],
+  );
 
   return (
     <ElementContext.Provider value={value}>{children}</ElementContext.Provider>

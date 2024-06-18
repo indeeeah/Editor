@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import BackgroundSizeChanger from '@/components/BackgroundSizeChanger';
+import EditHeader from '@/components/EditHeader';
 import Viewer from '@/components/Viewer';
 import { useElements } from '@/providers/ElementProvider';
 
@@ -79,7 +79,7 @@ export default function Home() {
   return (
     <>
       <div className="flex h-full grow flex-col bg-gray-primary">
-        <BackgroundSizeChanger />
+        <EditHeader />
         <div className="flex h-full items-center justify-center">
           <Viewer background={background} />
         </div>
