@@ -26,7 +26,6 @@ const elementComponents: Record<
 export default function Viewer({ background }: ViewerProps) {
   const { backgroundSize } = useBackgroundSize();
   const { elements } = useElements();
-  console.log(elements);
 
   return (
     <div

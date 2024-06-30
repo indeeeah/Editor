@@ -50,6 +50,7 @@ export default function SectionVariable() {
       {
         type: ElementType.Section,
         id: uuidv7(),
+        text: `Section ${elements.length + 1}`,
         style,
       },
     ]);

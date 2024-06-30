@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 
-import EditHeader from '@/components/EditHeader';
 import Viewer from '@/components/Viewer';
 import { useElements } from '@/providers/ElementProvider';
 
 import Editor from './Editor';
+import Controller from './Header/Controller';
 
 export default function Home() {
   const { elements, setElements } = useElements();
@@ -79,7 +79,7 @@ export default function Home() {
   return (
     <>
       <div className="flex h-full grow flex-col bg-gray-primary">
-        <EditHeader />
+        <Controller />
         <div className="flex h-full items-center justify-center">
           <Viewer background={background} />
         </div>
