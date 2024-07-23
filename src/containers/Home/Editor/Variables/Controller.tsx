@@ -1,10 +1,10 @@
 import { useRef } from 'react';
 
-import { ElementType } from '@/libs/elements';
+import { VariableType } from '@/libs/variables';
 
 type ControllerProps = {
-  selectedVariable: ElementType | null;
-  handleSelectedVariable: (variable: ElementType) => void;
+  selectedVariable: VariableType | null;
+  handleSelectedVariable: (variable: VariableType) => void;
 };
 
 export default function Controller({
@@ -40,22 +40,10 @@ export default function Controller({
           className="p-2 text-xs hover:bg-blue hover:text-white"
           style={{
             backgroundColor:
-              selectedVariable === ElementType.Section ? '#2B2B2B' : '',
-            color: selectedVariable === ElementType.Section ? '#fff' : '',
+              selectedVariable === VariableType.Box ? '#2B2B2B' : '',
+            color: selectedVariable === VariableType.Box ? '#fff' : '',
           }}
-          onClick={() => handleSelectedVariable(ElementType.Section)}
-        >
-          section
-        </button>
-        <button
-          type="button"
-          className="p-2 text-xs hover:bg-blue hover:text-white"
-          style={{
-            backgroundColor:
-              selectedVariable === ElementType.Box ? '#2B2B2B' : '',
-            color: selectedVariable === ElementType.Box ? '#fff' : '',
-          }}
-          onClick={() => handleSelectedVariable(ElementType.Box)}
+          onClick={() => handleSelectedVariable(VariableType.Box)}
         >
           box
         </button>
@@ -64,10 +52,10 @@ export default function Controller({
           className="p-2 text-xs hover:bg-blue hover:text-white"
           style={{
             backgroundColor:
-              selectedVariable === ElementType.Text ? '#2B2B2B' : '',
-            color: selectedVariable === ElementType.Text ? '#fff' : '',
+              selectedVariable === VariableType.Text ? '#2B2B2B' : '',
+            color: selectedVariable === VariableType.Text ? '#fff' : '',
           }}
-          onClick={() => handleSelectedVariable(ElementType.Text)}
+          onClick={() => handleSelectedVariable(VariableType.Text)}
         >
           text
         </button>
@@ -76,10 +64,10 @@ export default function Controller({
           className="p-2 text-xs hover:bg-blue hover:text-white"
           style={{
             backgroundColor:
-              selectedVariable === ElementType.Button ? '#2B2B2B' : '',
-            color: selectedVariable === ElementType.Button ? '#fff' : '',
+              selectedVariable === VariableType.Button ? '#2B2B2B' : '',
+            color: selectedVariable === VariableType.Button ? '#fff' : '',
           }}
-          onClick={() => handleSelectedVariable(ElementType.Button)}
+          onClick={() => handleSelectedVariable(VariableType.Button)}
         >
           button
         </button>

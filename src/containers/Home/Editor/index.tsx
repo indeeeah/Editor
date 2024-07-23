@@ -1,4 +1,7 @@
+import { useElements } from '@/providers/ElementProvider';
+
 import BackgroundColor from './BackgroundColor';
+import Section from './Section';
 import Title from './Title';
 import Variables from './Variables';
 
@@ -14,6 +17,8 @@ export default function Editor({
   background,
   handleBackgroundChange,
 }: EditorProps) {
+  const { elements } = useElements();
+
   return (
     <div className="flex h-full w-[350px] flex-col border-l border-gray-primary">
       <Title />
@@ -21,7 +26,8 @@ export default function Editor({
         background={background}
         handleBackgroundChange={handleBackgroundChange}
       />
-      <Variables />
+      <Section />
+      {elements.length > 0 && <Variables />}
     </div>
   );
 }

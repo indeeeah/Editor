@@ -13,6 +13,8 @@ import {
 import { Element } from '@/types/element';
 
 type ElementContextType = {
+  newElement: Element | null;
+  setNewElement: Dispatch<SetStateAction<Element | null>>;
   elements: Element[];
   setElements: Dispatch<SetStateAction<Element[]>>;
   selectedElement: Element;
@@ -20,6 +22,8 @@ type ElementContextType = {
 };
 
 const ElementContext = createContext<ElementContextType>({
+  newElement: null,
+  setNewElement: () => {},
   elements: [],
   setElements: () => {},
   selectedElement: {} as Element,
@@ -37,12 +41,20 @@ export const useElements = () => {
 };
 
 export const ElementProvider = ({ children }: { children: ReactNode }) => {
+  const [newElement, setNewElement] = useState<Element | null>(null);
   const [elements, setElements] = useState<Element[]>([]);
   const [selectedElement, setSelectedElement] = useState<Element>(elements[0]);
 
   const value = useMemo(
-    () => ({ elements, setElements, selectedElement, setSelectedElement }),
-    [elements, selectedElement],
+    () => ({
+      newElement,
+      setNewElement,
+      elements,
+      setElements,
+      selectedElement,
+      setSelectedElement,
+    }),
+    [newElement, elements, selectedElement],
   );
 
   return (

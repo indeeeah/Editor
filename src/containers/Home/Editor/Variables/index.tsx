@@ -2,17 +2,14 @@
 
 import { ComponentType, useState } from 'react';
 
-import { ElementType } from '@/libs/elements';
+import { VariableType } from '@/libs/variables';
 
 import Controller from './Controller';
-import SectionVariable from './SectionVariable';
 
-const variableComponent: Record<ElementType, ComponentType<any>> = {
-  [ElementType.Section]: SectionVariable,
-};
+const variableComponent: Record<VariableType, ComponentType<any>> = {};
 
 export default function Variables() {
-  const [selectedVariable, setSelectedVariable] = useState<ElementType | null>(
+  const [selectedVariable, setSelectedVariable] = useState<VariableType | null>(
     null,
   );
 

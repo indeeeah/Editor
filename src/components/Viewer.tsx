@@ -25,7 +25,7 @@ const elementComponents: Record<
 
 export default function Viewer({ background }: ViewerProps) {
   const { backgroundSize } = useBackgroundSize();
-  const { elements } = useElements();
+  const { newElement, elements } = useElements();
 
   return (
     <div
@@ -44,6 +44,16 @@ export default function Viewer({ background }: ViewerProps) {
 
           return <ElementComponent key={element.id} props={element} />;
         })}
+        {newElement && (
+          <>
+            {(() => {
+              const ElementComponent = elementComponents[newElement.type];
+              return (
+                <ElementComponent key={newElement.id} props={newElement} />
+              );
+            })()}
+          </>
+        )}
       </div>
     </div>
   );
