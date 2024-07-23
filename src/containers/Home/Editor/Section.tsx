@@ -79,6 +79,7 @@ export default function Section() {
 
   const trashSection = () => {
     setNewElement(null);
+    setSection(defaultStyle);
     setIsOpen(false);
   };
 
@@ -97,8 +98,9 @@ export default function Section() {
         className="flex cursor-pointer items-center justify-between gap-2"
         ref={sectionRef}
         onClick={() => {
+          if (isOpen) trashSection();
+          else addNewElement();
           setIsOpen(!isOpen);
-          addNewElement();
         }}
       >
         <p className="text-sm font-bold text-blue">section</p>
