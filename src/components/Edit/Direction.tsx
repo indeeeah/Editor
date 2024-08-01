@@ -65,7 +65,7 @@ export default function Direction({
             defaultValue="1"
             onChange={event => {
               const grid = Number(event.target.value);
-              handleGrid({ ...variableStyle, grid });
+              handleGrid(grid);
             }}
           />
         </div>
@@ -78,7 +78,7 @@ export default function Direction({
             defaultValue="0"
             onChange={event => {
               const gap = Number(event.target.value);
-              handleGap({ ...variableStyle, gap });
+              handleGap(gap);
             }}
           />
         </div>

@@ -24,6 +24,7 @@ const defaultStyle = {
   width: '100%',
   height: 50,
   grid: 1,
+  gap: 0,
   paddingTop: 0,
   paddingRight: 0,
   paddingBottom: 0,
@@ -56,6 +57,7 @@ export default function Section() {
       marginRight: convertSize(section.marginRight),
       marginBottom: convertSize(section.marginBottom),
       marginLeft: convertSize(section.marginLeft),
+      gap: convertSize(section.gap),
       ...convertGrid(section.grid),
       ...convertDirection(section.direction as DirectionType),
     };

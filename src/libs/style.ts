@@ -11,7 +11,7 @@ export function convertSize(size: number | string) {
 export function convertGrid(grid: number) {
   if (!grid) return {};
 
-  return { gridTemplateColumns: `repeat(${grid}, 1fr)` };
+  return { display: 'grid', gridTemplateColumns: grid };
 }
 
 export function convertDirection(direction: DirectionType) {

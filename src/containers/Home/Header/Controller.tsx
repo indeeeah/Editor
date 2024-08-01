@@ -94,8 +94,9 @@ export default function Controller() {
         </button>
       </div>
       <LayerController
-        isOpen={isLayerControllerOpen}
         layerControllerRef={layerControllerRef}
+        isOpen={isLayerControllerOpen}
+        setIsLayerControllerOpen={setIsLayerControllerOpen}
       />
     </div>
   );
