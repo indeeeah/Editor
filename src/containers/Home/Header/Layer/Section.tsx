@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { IoMdEye } from 'react-icons/io';
+import { IoIosTrash, IoMdEye } from 'react-icons/io';
 
 import { useElements } from '@/providers/ElementProvider';
 import { LayerProps } from '@/types/layer';
@@ -42,6 +42,14 @@ const Section = forwardRef<HTMLDivElement, LayerProps>(
               );
             }}
           />
+        </div>
+        <div
+          className="flex h-full w-12 items-center justify-center text-sm"
+          onClick={() =>
+            setElements(prev => prev.filter(element => element.id !== props.id))
+          }
+        >
+          <IoIosTrash className="size-5" />
         </div>
       </div>
     );
