@@ -45,6 +45,7 @@ export default function Section() {
 
   const convertStyle = useCallback(() => {
     return {
+      display: 'block',
       backgroundColor: section.color,
       opacity: section.opacity,
       width: convertSize(section.width),

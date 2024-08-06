@@ -13,8 +13,28 @@ const Section = forwardRef<HTMLDivElement, LayerProps>(
         ref={ref}
         className="flex h-12 w-full cursor-pointer items-center border-b-2 border-gray-400"
       >
-        <div className="flex h-full w-12 items-center justify-center bg-gray-600 text-sm">
-          <IoMdEye className="size-5" />
+        <div
+          className="flex h-full w-12 items-center justify-center bg-gray-600 text-sm"
+          onClick={() =>
+            setElements(prev =>
+              prev.map(element =>
+                element.id === props.id
+                  ? {
+                      ...element,
+                      style: {
+                        ...element.style,
+                        display:
+                          element.style.display === 'none' ? 'block' : 'none',
+                      },
+                    }
+                  : element,
+              ),
+            )
+          }
+        >
+          <IoMdEye
+            className={`size-5 ${props.style.display === 'none' ? 'text-blue' : ''}`}
+          />
         </div>
         <div
           className="flex"
