@@ -29,7 +29,7 @@ export default function Viewer({ background }: ViewerProps) {
 
   return (
     <div
-      className="overflow-scroll rounded-md"
+      className="overflow-scroll"
       style={{
         width: backgroundSize.width,
         height: backgroundSize.height,
