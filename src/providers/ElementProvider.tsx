@@ -17,8 +17,10 @@ type ElementContextType = {
   setNewElement: Dispatch<SetStateAction<Element | null>>;
   elements: Element[];
   setElements: Dispatch<SetStateAction<Element[]>>;
-  selectedElement: Element;
-  setSelectedElement: Dispatch<SetStateAction<Element>>;
+  selectedElement: Element | null;
+  setSelectedElement: Dispatch<SetStateAction<Element | null>>;
+  isModifying: boolean;
+  setIsModifying: Dispatch<SetStateAction<boolean>>;
 };
 
 const ElementContext = createContext<ElementContextType>({
@@ -28,6 +30,8 @@ const ElementContext = createContext<ElementContextType>({
   setElements: () => {},
   selectedElement: {} as Element,
   setSelectedElement: () => {},
+  isModifying: false,
+  setIsModifying: () => {},
 });
 
 export const useElements = () => {
@@ -43,7 +47,8 @@ export const useElements = () => {
 export const ElementProvider = ({ children }: { children: ReactNode }) => {
   const [newElement, setNewElement] = useState<Element | null>(null);
   const [elements, setElements] = useState<Element[]>([]);
-  const [selectedElement, setSelectedElement] = useState<Element>(elements[0]);
+  const [selectedElement, setSelectedElement] = useState<Element | null>(null);
+  const [isModifying, setIsModifying] = useState<boolean>(false);
 
   const value = useMemo(
     () => ({
@@ -53,8 +58,10 @@ export const ElementProvider = ({ children }: { children: ReactNode }) => {
       setElements,
       selectedElement,
       setSelectedElement,
+      isModifying,
+      setIsModifying,
     }),
-    [newElement, elements, selectedElement],
+    [newElement, elements, selectedElement, isModifying],
   );
 
   return (

@@ -1,21 +1,14 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { uuidv7 } from 'uuidv7';
 
-import Color from '@/components/Edit/Color';
-import Direction from '@/components/Edit/Direction';
-import Size from '@/components/Edit/Size';
 import { ElementType } from '@/libs/elements';
-import {
-  DirectionType,
-  convertDirection,
-  convertGrid,
-  convertSize,
-} from '@/libs/style';
 import { useElements } from '@/providers/ElementProvider';
 import { Element } from '@/types/element';
+
+import SectionForm from './Form';
 
 const defaultStyle = {
   color: '#FFFFFF',
@@ -43,42 +36,21 @@ export default function Section() {
   const [isOpen, setIsOpen] = useState(false);
   const [section, setSection] = useState(defaultStyle);
 
-  const convertStyle = useCallback(() => {
-    return {
-      display: 'block',
-      backgroundColor: section.color,
-      opacity: section.opacity,
-      width: convertSize(section.width),
-      height: convertSize(section.height),
-      paddingTop: convertSize(section.paddingTop),
-      paddingRight: convertSize(section.paddingRight),
-      paddingBottom: convertSize(section.paddingBottom),
-      paddingLeft: convertSize(section.paddingLeft),
-      marginTop: convertSize(section.marginTop),
-      marginRight: convertSize(section.marginRight),
-      marginBottom: convertSize(section.marginBottom),
-      marginLeft: convertSize(section.marginLeft),
-      gap: convertSize(section.gap),
-      ...convertGrid(section.grid),
-      ...convertDirection(section.direction as DirectionType),
-    };
-  }, [section]);
-
   const addNewElement = () => {
     setNewElement({
       type: ElementType.Section,
       id: uuidv7(),
       text: `Section ${elements.length + 1}`,
-      style: convertStyle(),
+      style: section,
     });
   };
 
   useEffect(() => {
     setNewElement(prev => {
       if (!prev) return null;
-      return { ...prev, style: convertStyle() };
+      return { ...prev, style: section };
     });
-  }, [setNewElement, convertStyle]);
+  }, [section, setNewElement]);
 
   const trashSection = () => {
     setNewElement(null);
@@ -119,12 +91,7 @@ export default function Section() {
         </svg>
       </div>
       <div className={`flex flex-col pt-4 ${isOpen ? '' : 'hidden'}`}>
-        <p className="text-sm font-bold text-blue">color</p>
-        <Color variableStyle={section} handleVariableStyle={setSection} />
-        <p className="text-sm font-bold text-blue">direction</p>
-        <Direction variableStyle={section} handleVariableStyle={setSection} />
-        <p className="text-sm font-bold text-blue">size</p>
-        <Size variableStyle={section} handleVariableStyle={setSection} />
+        <SectionForm section={section} setSection={setSection} />
         <div className="grid grid-cols-2 gap-2">
           <button
             type="button"

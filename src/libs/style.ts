@@ -14,7 +14,10 @@ export function convertGrid(grid: number) {
   return { display: 'grid', gridTemplateColumns: grid };
 }
 
-export function convertDirection(direction: DirectionType) {
+export function convertDirection(direction: DirectionType): {
+  display?: 'flex';
+  flexDirection?: 'row' | 'column';
+} {
   if (direction === 'horizontal')
     return { display: 'flex', flexDirection: 'row' };
   if (direction === 'vertical')

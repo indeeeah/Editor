@@ -1,14 +1,27 @@
 'use client';
 
-import { useState } from 'react';
+import { ForwardRefExoticComponent, useState } from 'react';
 
 import DraggableCanvas from '@/components/Layout/DraggableCanvas';
+import { Section } from '@/components/Modify';
 import Viewer from '@/components/Viewer';
+import { ElementType } from '@/libs/elements';
+import { useElements } from '@/providers/ElementProvider';
+import { Element, ElementProps } from '@/types/element';
 
 import Editor from './Editor';
 import Controller from './Header/Controller';
 
+const modifyingComponents: Record<
+  Element['type'],
+  ForwardRefExoticComponent<ElementProps>
+> = {
+  [ElementType.Section]: Section,
+};
+
 export default function Home() {
+  const { selectedElement, isModifying } = useElements();
+
   const [background, setBackground] = useState({
     color: '#FFFFFF',
     opacity: 1,
@@ -31,6 +44,19 @@ export default function Home() {
             }}
           >
             <DraggableCanvas type="viewer" setWorkSheetSize={setWorkSheetSize}>
+              {selectedElement &&
+                isModifying &&
+                (() => {
+                  const ModifyingComponent =
+                    modifyingComponents[selectedElement.type];
+
+                  return (
+                    <ModifyingComponent
+                      key={selectedElement.id}
+                      props={selectedElement}
+                    />
+                  );
+                })()}
               <Viewer background={background} />
             </DraggableCanvas>
           </div>

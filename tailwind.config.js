@@ -11,6 +11,14 @@ module.exports = {
       transparent: 'transparent',
       beige: '#F2EDE7',
       white: '#FFFFFF',
+      brightBlue: {
+        50: '#ecf4ff',
+        100: '#dbeafe',
+        400: '#5b8ee2',
+        500: '#3b82f6',
+        600: '#2563eb',
+        800: '#1e40af',
+      },
       blue: '#2B2B2B',
       gray: {
         primary: '#e5e7eb',
