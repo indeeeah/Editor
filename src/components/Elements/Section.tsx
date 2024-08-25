@@ -12,7 +12,8 @@ import { ElementProps } from '@/types/element';
 import Selected from './Selected';
 
 const Section = forwardRef<HTMLDivElement, ElementProps>(({ props }, ref) => {
-  const { selectedElement, isModifying, setIsModifying } = useElements();
+  const { selectedElement, setSelectedElement, isModifying, setIsModifying } =
+    useElements();
 
   const convertStyle = (): CSSProperties => {
     const section = props.style;
@@ -45,9 +46,12 @@ const Section = forwardRef<HTMLDivElement, ElementProps>(({ props }, ref) => {
           ...convertStyle(),
           position: 'relative',
         }}
+        className={`${selectedElement?.id !== props.id ? 'hover:border-2 hover:border-brightBlue-400' : ''}`}
+        onClick={() => setSelectedElement(props)}
       >
         <div
           className={`${selectedElement?.id !== props.id ? 'hidden' : ''} group`}
+          onClick={e => e.stopPropagation()}
         >
           <Selected style={convertStyle()} />
           <button

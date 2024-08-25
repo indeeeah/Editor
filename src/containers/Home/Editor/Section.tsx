@@ -4,11 +4,10 @@ import { useEffect, useRef, useState } from 'react';
 
 import { uuidv7 } from 'uuidv7';
 
+import SectionForm from '@/components/Forms/Section';
 import { ElementType } from '@/libs/elements';
 import { useElements } from '@/providers/ElementProvider';
 import { Element } from '@/types/element';
-
-import SectionForm from './Form';
 
 const defaultStyle = {
   color: '#FFFFFF',
@@ -31,7 +30,13 @@ const defaultStyle = {
 export default function Section() {
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  const { newElement, setNewElement, elements, setElements } = useElements();
+  const {
+    newElement,
+    setNewElement,
+    elements,
+    setElements,
+    setSelectedElement,
+  } = useElements();
 
   const [isOpen, setIsOpen] = useState(false);
   const [section, setSection] = useState(defaultStyle);
@@ -60,6 +65,7 @@ export default function Section() {
 
   const addSection = () => {
     setElements(prevElements => [...prevElements, newElement as Element]);
+    setSelectedElement(newElement);
     setSection(defaultStyle);
     setNewElement(null);
     setIsOpen(false);

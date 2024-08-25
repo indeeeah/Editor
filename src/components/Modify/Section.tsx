@@ -2,9 +2,10 @@
 
 import { forwardRef } from 'react';
 
-import SectionForm from '@/containers/Home/Editor/Section/Form';
 import { useElements } from '@/providers/ElementProvider';
 import { ElementProps } from '@/types/element';
+
+import SectionForm from '../Forms/Section';
 
 import Container from './Container';
 

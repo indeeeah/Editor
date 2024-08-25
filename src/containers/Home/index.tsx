@@ -20,7 +20,8 @@ const modifyingComponents: Record<
 };
 
 export default function Home() {
-  const { selectedElement, isModifying } = useElements();
+  const { selectedElement, setSelectedElement, isModifying, setIsModifying } =
+    useElements();
 
   const [background, setBackground] = useState({
     color: '#FFFFFF',
@@ -35,7 +36,13 @@ export default function Home() {
     <>
       <div className="flex h-full grow flex-col bg-gray-300">
         <Controller />
-        <div className="relative flex h-full overflow-scroll">
+        <div
+          className="relative flex h-full overflow-scroll"
+          onClick={() => {
+            setSelectedElement(null);
+            setIsModifying(false);
+          }}
+        >
           <div
             className="absolute flex bg-gray-primary"
             style={{
@@ -43,22 +50,27 @@ export default function Home() {
               height: `${workSheetSize.height}px`,
             }}
           >
-            <DraggableCanvas type="viewer" setWorkSheetSize={setWorkSheetSize}>
-              {selectedElement &&
-                isModifying &&
-                (() => {
-                  const ModifyingComponent =
-                    modifyingComponents[selectedElement.type];
+            <div onClick={e => e.stopPropagation()}>
+              <DraggableCanvas
+                type="viewer"
+                setWorkSheetSize={setWorkSheetSize}
+              >
+                {selectedElement &&
+                  isModifying &&
+                  (() => {
+                    const ModifyingComponent =
+                      modifyingComponents[selectedElement.type];
 
-                  return (
-                    <ModifyingComponent
-                      key={selectedElement.id}
-                      props={selectedElement}
-                    />
-                  );
-                })()}
-              <Viewer background={background} />
-            </DraggableCanvas>
+                    return (
+                      <ModifyingComponent
+                        key={selectedElement.id}
+                        props={selectedElement}
+                      />
+                    );
+                  })()}
+                <Viewer background={background} />
+              </DraggableCanvas>
+            </div>
           </div>
         </div>
       </div>
