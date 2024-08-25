@@ -4,9 +4,16 @@ import { ComponentType, useState } from 'react';
 
 import { VariableType } from '@/libs/variables';
 
+import Box from './Box';
+import Button from './Button';
 import Controller from './Controller';
+import Text from './Text';
 
-const variableComponent: Record<VariableType, ComponentType<any>> = {};
+const variableComponent: Record<VariableType, ComponentType<any>> = {
+  [VariableType.Box]: Box,
+  [VariableType.Text]: Text,
+  [VariableType.Button]: Button,
+};
 
 export default function Variables() {
   const [selectedVariable, setSelectedVariable] = useState<VariableType | null>(

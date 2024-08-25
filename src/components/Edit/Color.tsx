@@ -51,7 +51,6 @@ export default function Color({
           <input
             type="text"
             className="w-8 border border-gray-primary text-center text-xs outline-none"
-            placeholder="Opacity"
             id="opacity"
             defaultValue={variableStyle.opacity * 100}
             onChange={event => {
