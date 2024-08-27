@@ -1,13 +1,14 @@
 import Color from '@/components/Edit/Color';
 import Direction from '@/components/Edit/Direction';
 import Size from '@/components/Edit/Size';
+import { SectionStyleProps } from '@/types/element';
 
 export default function SectionForm({
   section,
   setSection,
 }: {
-  section: any;
-  setSection: (section: any) => void;
+  section: SectionStyleProps;
+  setSection: (section: SectionStyleProps) => void;
 }) {
   return (
     <>

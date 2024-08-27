@@ -1,9 +1,31 @@
+'use client';
+
+import { useState } from 'react';
+
 import TextForm from '@/components/Forms/Text';
+import { TextProps } from '@/types/element';
+
+const defaultText: TextProps = {
+  text: '',
+  color: '#000000',
+  font: 'Arial',
+  fontSize: 16,
+  fontWeight: 400,
+  italic: false,
+  underline: false,
+  strikeThrough: false,
+  align: 'left',
+  focus: false,
+};
 
 export default function Text() {
+  const [text, setText] = useState<TextProps>(defaultText);
+
+  const handleText = (text: TextProps) => setText(text);
+
   return (
     <>
-      <TextForm />
+      <TextForm text={text} setText={handleText} />
       <div className="grid grid-cols-2 gap-2">
         <button
           type="button"

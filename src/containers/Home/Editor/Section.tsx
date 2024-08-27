@@ -7,9 +7,9 @@ import { uuidv7 } from 'uuidv7';
 import SectionForm from '@/components/Forms/Section';
 import { ElementType } from '@/libs/elements';
 import { useElements } from '@/providers/ElementProvider';
-import { Element } from '@/types/element';
+import { Element, SectionStyleProps } from '@/types/element';
 
-const defaultStyle = {
+const defaultStyle: SectionStyleProps = {
   color: '#FFFFFF',
   opacity: 1,
   direction: 'horizontal',
@@ -39,7 +39,7 @@ export default function Section() {
   } = useElements();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [section, setSection] = useState(defaultStyle);
+  const [section, setSection] = useState<SectionStyleProps>(defaultStyle);
 
   const addNewElement = () => {
     setNewElement({

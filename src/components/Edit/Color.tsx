@@ -61,7 +61,9 @@ export default function Color({
           <span className="text-xs text-gray-600">%</span>
         </div>
       </div>
-      <div className={`absolute pt-2 ${colorPickerOpen ? 'block' : 'hidden'}`}>
+      <div
+        className={`absolute z-10 pt-2 ${colorPickerOpen ? 'block' : 'hidden'}`}
+      >
         <ColorPicker
           defaultColor={variableStyle.color}
           onChange={color => handleVariableStyle({ ...variableStyle, color })}
