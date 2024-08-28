@@ -28,6 +28,11 @@ export type StyleProps = {
 
 export type Element = {
   type: ElementType;
+  id: string;
+  text: string;
+  style: { [key: string]: any };
+  parentId?: string;
+  value?: string;
   [key: string]: any;
 };
 

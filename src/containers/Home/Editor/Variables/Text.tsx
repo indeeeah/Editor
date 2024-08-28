@@ -37,7 +37,7 @@ export default function Text({
   const handleText = (text: TextProps) => setText(text);
 
   const addNewElement = useCallback(() => {
-    const element = {
+    const element: Element = {
       type: ElementType.Text,
       id: uuidv7(),
       text: `Text ${elements.length + 1}`,

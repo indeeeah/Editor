@@ -27,6 +27,9 @@ export default function Viewer({ background }: ViewerProps) {
   const { backgroundSize } = useBackgroundSize();
   const { newElement, elements } = useElements();
 
+  const rootElements = elements.filter(element => !element.parentId);
+  const rootNewElement = newElement && !newElement.parentId ? newElement : null;
+
   return (
     <div
       className="overflow-scroll"
@@ -39,17 +42,21 @@ export default function Viewer({ background }: ViewerProps) {
       id="content"
     >
       <div className="size-full">
-        {elements.map(element => {
+        {rootElements.map(element => {
           const ElementComponent = elementComponents[element.type];
 
           return <ElementComponent key={element.id} props={element} />;
         })}
-        {newElement && (
+        {rootNewElement && (
           <>
             {(() => {
-              const ElementComponent = elementComponents[newElement.type];
+              const ElementComponent = elementComponents[rootNewElement.type];
+
               return (
-                <ElementComponent key={newElement.id} props={newElement} />
+                <ElementComponent
+                  key={rootNewElement.id}
+                  props={rootNewElement}
+                />
               );
             })()}
           </>
