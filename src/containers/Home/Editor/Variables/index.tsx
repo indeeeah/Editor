@@ -55,7 +55,7 @@ export default function Variables() {
         />
         {SelectedComponent && (
           <div className="mt-4 rounded-md border border-gray-primary p-4">
-            <SelectedComponent />
+            <SelectedComponent closeVariables={() => setIsOpen(false)} />
           </div>
         )}
       </div>

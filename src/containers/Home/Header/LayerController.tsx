@@ -7,13 +7,14 @@ import { useElements } from '@/providers/ElementProvider';
 import { Element } from '@/types/element';
 import { LayerProps } from '@/types/layer';
 
-import { Section } from './Layer';
+import { Section, Text } from './Layer';
 
 const layerComponents: Record<
   Element['type'],
   ForwardRefExoticComponent<LayerProps>
 > = {
   [ElementType.Section]: Section,
+  [ElementType.Text]: Text,
 };
 
 export default function LayerController({

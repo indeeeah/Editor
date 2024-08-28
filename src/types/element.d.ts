@@ -36,7 +36,6 @@ export type ElementProps = {
 };
 
 export type TextProps = {
-  text: string;
-  focus: boolean;
+  value: string;
   style: StyleProps;
 };

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { ChangeEvent, useEffect, useRef } from 'react';
 
 import { TextProps } from '@/types/element';
 
@@ -10,15 +10,19 @@ import Textarea from '../Textarea';
 export default function TextForm({
   text,
   setText,
+  onFocus,
+  onBlur,
 }: {
   text: TextProps;
   setText: (text: TextProps) => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    const handleFocus = () => setText({ ...text, focus: true });
-    const handleBlur = () => setText({ ...text, focus: false });
+    const handleFocus = () => (onFocus ? onFocus() : null);
+    const handleBlur = () => (onBlur ? onBlur() : null);
 
     const textareaElement = textareaRef.current;
 
@@ -33,13 +37,22 @@ export default function TextForm({
         textareaElement.removeEventListener('blur', handleBlur);
       }
     };
-  }, [text, setText]);
+  }, [text, setText, onFocus, onBlur]);
+
+  const handleChangeText = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    setText({ ...text, value });
+  };
 
   return (
     <>
       <Font />
       <div className="py-2">
-        <Textarea ref={textareaRef} />
+        <Textarea
+          ref={textareaRef}
+          text={text.value}
+          onChange={handleChangeText}
+        />
       </div>
     </>
   );
