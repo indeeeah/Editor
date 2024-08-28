@@ -25,7 +25,7 @@ const Section = forwardRef<HTMLDivElement, ElementProps>(({ props }, ref) => {
 
     return {
       display: 'block',
-      backgroundColor: section.color,
+      backgroundColor: section.backgroundColor,
       opacity: section.opacity,
       width: convertSize(section.width),
       height: convertSize(section.height),

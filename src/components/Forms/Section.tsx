@@ -1,23 +1,33 @@
 import Color from '@/components/Edit/Color';
 import Direction from '@/components/Edit/Direction';
 import Size from '@/components/Edit/Size';
-import { SectionStyleProps } from '@/types/element';
+import { StyleProps } from '@/types/element';
 
 export default function SectionForm({
-  section,
-  setSection,
+  sectionStyle,
+  setSectionStyle,
 }: {
-  section: SectionStyleProps;
-  setSection: (section: SectionStyleProps) => void;
+  sectionStyle: StyleProps;
+  setSectionStyle: (sectionStyle: StyleProps) => void;
 }) {
   return (
     <>
       <p className="text-sm font-bold text-blue">color</p>
-      <Color variableStyle={section} handleVariableStyle={setSection} />
+      <Color
+        variableStyle={sectionStyle}
+        handleVariableStyle={setSectionStyle}
+        type="backgroundColor"
+      />
       <p className="text-sm font-bold text-blue">direction</p>
-      <Direction variableStyle={section} handleVariableStyle={setSection} />
+      <Direction
+        variableStyle={sectionStyle}
+        handleVariableStyle={setSectionStyle}
+      />
       <p className="text-sm font-bold text-blue">size</p>
-      <Size variableStyle={section} handleVariableStyle={setSection} />
+      <Size
+        variableStyle={sectionStyle}
+        handleVariableStyle={setSectionStyle}
+      />
     </>
   );
 }

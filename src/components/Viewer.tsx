@@ -10,7 +10,7 @@ import { Element, ElementProps } from '@/types/element';
 import { Box, Button, Section, Text } from './Elements';
 
 type ViewerProps = {
-  background: { color: string; opacity: number };
+  background: { backgroundColor: string; opacity: number };
 };
 
 const elementComponents: Record<
@@ -33,7 +33,7 @@ export default function Viewer({ background }: ViewerProps) {
       style={{
         width: backgroundSize.width,
         height: backgroundSize.height,
-        backgroundColor: background.color,
+        backgroundColor: background.backgroundColor,
         opacity: background.opacity,
       }}
       id="content"

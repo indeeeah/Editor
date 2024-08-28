@@ -3,22 +3,27 @@
 import { useState } from 'react';
 
 import TextForm from '@/components/Forms/Text';
+import { useElements } from '@/providers/ElementProvider';
 import { TextProps } from '@/types/element';
 
 const defaultText: TextProps = {
   text: '',
-  color: '#000000',
-  font: 'Arial',
-  fontSize: 16,
-  fontWeight: 400,
-  italic: false,
-  underline: false,
-  strikeThrough: false,
-  align: 'left',
   focus: false,
+  style: {
+    color: '#000000',
+    font: 'Arial',
+    fontSize: 16,
+    fontWeight: 400,
+    italic: false,
+    underline: false,
+    strikeThrough: false,
+    align: 'left',
+  },
 };
 
 export default function Text() {
+  const { setNewElement } = useElements();
+
   const [text, setText] = useState<TextProps>(defaultText);
 
   const handleText = (text: TextProps) => setText(text);

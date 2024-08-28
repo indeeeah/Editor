@@ -6,9 +6,9 @@ import Title from './Title';
 import Variables from './Variables';
 
 type EditorProps = {
-  background: { color: string; opacity: number };
+  background: { backgroundColor: string; opacity: number };
   handleBackgroundChange: (background: {
-    color: string;
+    backgroundColor: string;
     opacity: number;
   }) => void;
 };

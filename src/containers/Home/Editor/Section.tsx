@@ -7,10 +7,10 @@ import { uuidv7 } from 'uuidv7';
 import SectionForm from '@/components/Forms/Section';
 import { ElementType } from '@/libs/elements';
 import { useElements } from '@/providers/ElementProvider';
-import { Element, SectionStyleProps } from '@/types/element';
+import { Element, StyleProps } from '@/types/element';
 
-const defaultStyle: SectionStyleProps = {
-  color: '#FFFFFF',
+const defaultStyle: StyleProps = {
+  backgroundColor: '#FFFFFF',
   opacity: 1,
   direction: 'horizontal',
   width: '100%',
@@ -39,34 +39,34 @@ export default function Section() {
   } = useElements();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [section, setSection] = useState<SectionStyleProps>(defaultStyle);
+  const [sectionStyle, setSectionStyle] = useState<StyleProps>(defaultStyle);
 
   const addNewElement = () => {
     setNewElement({
       type: ElementType.Section,
       id: uuidv7(),
       text: `Section ${elements.length + 1}`,
-      style: section,
+      style: sectionStyle,
     });
   };
 
   useEffect(() => {
     setNewElement(prev => {
       if (!prev) return null;
-      return { ...prev, style: section };
+      return { ...prev, style: sectionStyle };
     });
-  }, [section, setNewElement]);
+  }, [sectionStyle, setNewElement]);
 
   const trashSection = () => {
     setNewElement(null);
-    setSection(defaultStyle);
+    setSectionStyle(defaultStyle);
     setIsOpen(false);
   };
 
   const addSection = () => {
     setElements(prevElements => [...prevElements, newElement as Element]);
     setSelectedElement(newElement);
-    setSection(defaultStyle);
+    setSectionStyle(defaultStyle);
     setNewElement(null);
     setIsOpen(false);
   };
@@ -97,7 +97,10 @@ export default function Section() {
         </svg>
       </div>
       <div className={`flex flex-col pt-4 ${isOpen ? '' : 'hidden'}`}>
-        <SectionForm section={section} setSection={setSection} />
+        <SectionForm
+          sectionStyle={sectionStyle}
+          setSectionStyle={setSectionStyle}
+        />
         <div className="grid grid-cols-2 gap-2">
           <button
             type="button"

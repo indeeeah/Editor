@@ -3,9 +3,9 @@
 import Color from '@/components/Edit/Color';
 
 type BackgroundColorProps = {
-  background: { color: string; opacity: number };
+  background: { backgroundColor: string; opacity: number };
   handleBackgroundChange: (background: {
-    color: string;
+    backgroundColor: string;
     opacity: number;
   }) => void;
 };
@@ -20,6 +20,7 @@ export default function BackgroundColor({
       <Color
         variableStyle={background}
         handleVariableStyle={handleBackgroundChange}
+        type="backgroundColor"
       />
     </div>
   );

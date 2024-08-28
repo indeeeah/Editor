@@ -12,19 +12,22 @@ import Container from './Container';
 const Section = forwardRef<HTMLDivElement, ElementProps>(({ props }) => {
   const { setElements, setSelectedElement } = useElements();
 
-  const setSection = (section: any) => {
+  const setSectionStyle = (sectionStyle: any) => {
     setSelectedElement(prev => {
       if (!prev) return null;
-      return { ...prev, style: section };
+      return { ...prev, style: sectionStyle };
     });
     setElements(prev =>
-      prev.map(p => (p.id === props.id ? { ...p, style: section } : p)),
+      prev.map(p => (p.id === props.id ? { ...p, style: sectionStyle } : p)),
     );
   };
 
   return (
     <Container>
-      <SectionForm section={props.style} setSection={setSection} />
+      <SectionForm
+        sectionStyle={props.style}
+        setSectionStyle={setSectionStyle}
+      />
     </Container>
   );
 });

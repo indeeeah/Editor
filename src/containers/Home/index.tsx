@@ -24,7 +24,7 @@ export default function Home() {
     useElements();
 
   const [background, setBackground] = useState({
-    color: '#FFFFFF',
+    backgroundColor: '#FFFFFF',
     opacity: 1,
   });
   const [workSheetSize, setWorkSheetSize] = useState({

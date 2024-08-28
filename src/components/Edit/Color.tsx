@@ -5,9 +5,11 @@ import ColorPicker from '../ColorPicker';
 export default function Color({
   variableStyle,
   handleVariableStyle,
+  type,
 }: {
   variableStyle: any;
   handleVariableStyle: (variableStyle: any) => void;
+  type: 'color' | 'backgroundColor';
 }) {
   const colorPickerRef = useRef<HTMLDivElement>(null);
 
@@ -30,6 +32,31 @@ export default function Color({
     };
   }, []);
 
+  const getColorByType = () => {
+    switch (type) {
+      case 'color':
+        return variableStyle.color;
+      case 'backgroundColor':
+        return variableStyle.backgroundColor;
+      default:
+        return variableStyle.color;
+    }
+  };
+
+  const handleColorByType = (color: string) => {
+    switch (type) {
+      case 'color':
+        handleVariableStyle({ ...variableStyle, color });
+        break;
+      case 'backgroundColor':
+        handleVariableStyle({ ...variableStyle, backgroundColor: color });
+        break;
+      default:
+        handleVariableStyle({ ...variableStyle, color });
+        break;
+    }
+  };
+
   return (
     <>
       <div className="flex items-center gap-8 py-4">
@@ -40,10 +67,12 @@ export default function Color({
         >
           <div
             className="size-6 rounded-sm border border-gray-primary"
-            style={{ backgroundColor: variableStyle.color }}
+            style={{
+              backgroundColor: getColorByType(),
+            }}
           />
           <span className="text-sm text-gray-600">
-            {variableStyle.color.toUpperCase()}
+            {getColorByType().toUpperCase()}
           </span>
         </div>
         <div className="flex gap-1">
@@ -66,7 +95,7 @@ export default function Color({
       >
         <ColorPicker
           defaultColor={variableStyle.color}
-          onChange={color => handleVariableStyle({ ...variableStyle, color })}
+          onChange={color => handleColorByType(color)}
         />
       </div>
     </>
