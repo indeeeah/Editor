@@ -3,16 +3,27 @@
 import { useEffect, useRef, useState } from 'react';
 
 type Props = {
+  defaultFont?: string;
   onSelect?: (option: string) => void;
 };
 
-export default function FontSelector({ onSelect }: Props) {
+export default function FontSelector({ defaultFont, onSelect }: Props) {
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const [open, setOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<string>('test');
+  const [selectedOption, setSelectedOption] = useState<string>(
+    defaultFont || 'Arial',
+  );
 
-  const fontList = ['rrrrr', 'sssss'];
+  const fontList = [
+    'Arial',
+    'Courier New',
+    'Georgia',
+    'Times New Roman',
+    'Verdana',
+    'Tahoma',
+    'Impact',
+  ];
 
   const onSelectOption = (option: string) => {
     setSelectedOption(option);
@@ -50,7 +61,12 @@ export default function FontSelector({ onSelect }: Props) {
         onClick={() => setOpen(prev => !prev)}
         onKeyDown={() => setOpen(prev => !prev)}
       >
-        <span className="max-w-10 truncate px-1">{selectedOption}</span>
+        <span
+          className="max-w-16 truncate px-1"
+          style={{ fontFamily: selectedOption }}
+        >
+          {selectedOption}
+        </span>
         <svg
           width="16"
           height="16"
@@ -76,6 +92,7 @@ export default function FontSelector({ onSelect }: Props) {
               onClick={() => onSelectOption(font)}
               onKeyDown={() => onSelectOption(font)}
               className="block w-full"
+              style={{ fontFamily: font }}
             >
               {font}
             </span>

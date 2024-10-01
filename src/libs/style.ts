@@ -30,6 +30,26 @@ export function convertDirection(direction: DirectionType): {
   return {};
 }
 
+export function convertTextDecoration(style: StyleProps) {
+  const decorations = [];
+
+  if (style.underline) decorations.push('underline');
+  if (style.strikeThrough) decorations.push('line-through');
+
+  return decorations.length > 0 ? decorations.join(' ') : 'none';
+}
+
+export function convertAlign(style: StyleProps) {
+  if (style.align === 'center')
+    return { display: 'flex', justifyContent: 'center' };
+  if (style.align === 'left')
+    return { display: 'flex', justifyContent: 'flex-start' };
+  if (style.align === 'right')
+    return { display: 'flex', justifyContent: 'flex-end' };
+
+  return {};
+}
+
 export function convertStyle(style: StyleProps): CSSProperties {
   return {
     display: 'block',
@@ -56,5 +76,11 @@ export function convertStyle(style: StyleProps): CSSProperties {
     ...(style.direction
       ? convertDirection(style.direction as DirectionType)
       : {}),
+    color: style.color,
+    fontSize: style.fontSize,
+    fontWeight: style.fontWeight,
+    fontStyle: style.italic ? 'italic' : 'normal',
+    textDecoration: convertTextDecoration(style),
+    fontFamily: style.fontFamily,
   };
 }

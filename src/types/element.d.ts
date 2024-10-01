@@ -24,6 +24,7 @@ export type StyleProps = {
   underline?: boolean;
   strikeThrough?: boolean;
   align?: 'left' | 'center' | 'right';
+  fontFamily?: string;
 };
 
 export type Element = {

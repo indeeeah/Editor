@@ -3,14 +3,17 @@
 import { useEffect, useRef, useState } from 'react';
 
 type Props = {
+  defaultWeight?: number;
   onSelect?: (option: number) => void;
 };
 
-export default function FontWeightSelector({ onSelect }: Props) {
+export default function FontWeightSelector({ defaultWeight, onSelect }: Props) {
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const [open, setOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<number>(400);
+  const [selectedOption, setSelectedOption] = useState<number>(
+    defaultWeight || 400,
+  );
 
   const fontWeightList = [100, 200, 300, 400, 500, 600, 700, 800, 900];
 

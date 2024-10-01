@@ -20,6 +20,7 @@ const defaultStyle: StyleProps = {
   strikeThrough: false,
   align: 'left',
   opacity: 1,
+  fontFamily: 'Arial',
 };
 
 export default function Text({
@@ -71,10 +72,12 @@ export default function Text({
   }, [text, fontStyle, setNewElement]);
 
   const trashText = () => {
-    setNewElement(null);
     setText('');
     setFontStyle(defaultStyle);
+    setIsReadyToAdd(false);
+    setNewElement(null);
     closeVariables();
+    console.log(elements, newElement);
   };
 
   const addText = () => {

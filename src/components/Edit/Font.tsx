@@ -49,6 +49,14 @@ export default function Font({ fontStyle, handleFontStyle }: FontProps) {
     };
   }, []);
 
+  const handleFontFamily = (fontFamily: string) => {
+    handleFontStyle({ ...fontStyle, fontFamily });
+  };
+
+  const handleFontWeight = (fontWeight: number) => {
+    handleFontStyle({ ...fontStyle, fontWeight });
+  };
+
   return (
     <>
       <div className="flex items-center gap-2 pt-2">
@@ -141,8 +149,14 @@ export default function Font({ fontStyle, handleFontStyle }: FontProps) {
         </div>
       </div>
       <div className="flex items-center gap-2 pt-2">
-        <FontSelector />
-        <FontWeightSelector />
+        <FontSelector
+          defaultFont={fontStyle.fontFamily}
+          onSelect={handleFontFamily}
+        />
+        <FontWeightSelector
+          defaultWeight={fontStyle.fontWeight}
+          onSelect={handleFontWeight}
+        />
         <div className="flex gap-1">
           <span className="text-xs text-gray-600">size</span>
           <input
