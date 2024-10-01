@@ -7,20 +7,19 @@ import { uuidv7 } from 'uuidv7';
 import TextForm from '@/components/Forms/Text';
 import { ElementType } from '@/libs/elements';
 import { useElements } from '@/providers/ElementProvider';
-import { Element, TextProps } from '@/types/element';
+import { Element, StyleProps } from '@/types/element';
 
-const defaultText: TextProps = {
-  value: '',
-  style: {
-    color: '#000000',
-    font: 'Arial',
-    fontSize: 16,
-    fontWeight: 400,
-    italic: false,
-    underline: false,
-    strikeThrough: false,
-    align: 'left',
-  },
+const defaultStyle: StyleProps = {
+  color: '#000000',
+  backgroundColor: 'transparent',
+  font: 'Arial',
+  fontSize: 16,
+  fontWeight: 400,
+  italic: false,
+  underline: false,
+  strikeThrough: false,
+  align: 'left',
+  opacity: 1,
 };
 
 export default function Text({
@@ -38,24 +37,25 @@ export default function Text({
   } = useElements();
 
   const [isReadyToAdd, setIsReadyToAdd] = useState(false);
-  const [text, setText] = useState<TextProps>(defaultText);
+  const [text, setText] = useState<string>('');
+  const [fontStyle, setFontStyle] = useState<StyleProps>(defaultStyle);
 
-  const handleText = (text: TextProps) => setText(text);
+  const handleText = (text: string) => setText(text);
 
   const addNewElement = useCallback(() => {
     const element: Element = {
       type: ElementType.Text,
       id: uuidv7(),
       text: `Text ${elements.length + 1}`,
-      style: text.style,
-      value: text.value,
+      style: fontStyle,
+      value: text,
     };
 
     const isDendent = () => selectedElement?.type === ElementType.Section;
     if (isDendent()) element.parentId = selectedElement?.id;
 
     setNewElement(element);
-  }, [elements.length, text, selectedElement, setNewElement]);
+  }, [elements.length, text, fontStyle, selectedElement, setNewElement]);
 
   const onFocus = () => setIsReadyToAdd(true);
 
@@ -66,19 +66,21 @@ export default function Text({
   useEffect(() => {
     setNewElement(prev => {
       if (!prev) return null;
-      return { ...prev, style: text.style, value: text.value };
+      return { ...prev, style: fontStyle, value: text };
     });
-  }, [text, setNewElement]);
+  }, [text, fontStyle, setNewElement]);
 
   const trashText = () => {
     setNewElement(null);
-    setText(defaultText);
+    setText('');
+    setFontStyle(defaultStyle);
     closeVariables();
   };
 
   const addText = () => {
     setElements(prevElements => [...prevElements, newElement as Element]);
-    setText(defaultText);
+    setText('');
+    setFontStyle(defaultStyle);
     setNewElement(null);
     setSelectedElement(null);
     closeVariables();
@@ -86,7 +88,13 @@ export default function Text({
 
   return (
     <>
-      <TextForm text={text} setText={handleText} onFocus={onFocus} />
+      <TextForm
+        text={text}
+        setText={handleText}
+        fontStyle={fontStyle}
+        setFontStyle={setFontStyle}
+        onFocus={onFocus}
+      />
       <div className="grid grid-cols-2 gap-2">
         <button
           type="button"

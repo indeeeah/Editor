@@ -7,24 +7,24 @@ import {
   MdOutlineFormatAlignRight,
 } from 'react-icons/md';
 
+import { StyleProps } from '@/types/element';
+
 import ColorPicker from '../ColorPicker';
 import FontSelector from '../FontSelector';
 import FontWeightSelector from '../FontWeightSelector';
 
-export default function Font() {
+type FontProps = {
+  fontStyle: StyleProps;
+  handleFontStyle: (fontStyle: StyleProps) => void;
+};
+
+export default function Font({ fontStyle, handleFontStyle }: FontProps) {
   const colorPickerRef = useRef<HTMLDivElement>(null);
+  const backgroundColorPickerRef = useRef<HTMLDivElement>(null);
 
   const [colorPickerOpen, setColorPickerOpen] = useState(false);
-  const [fontType, setFontType] = useState({
-    size: 16,
-    bold: false,
-    italic: false,
-    underline: false,
-    strikeThrough: false,
-    align: 'left' as 'left' | 'center' | 'right',
-    color: '#000000',
-    opacity: 1,
-  });
+  const [backgroundColorPickerOpen, setBackgroundColorPickerOpen] =
+    useState(false);
 
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
@@ -33,6 +33,12 @@ export default function Font() {
         !colorPickerRef.current.contains(event.target as Node)
       ) {
         setColorPickerOpen(false);
+      }
+      if (
+        backgroundColorPickerRef.current &&
+        !backgroundColorPickerRef.current.contains(event.target as Node)
+      ) {
+        setBackgroundColorPickerOpen(false);
       }
     };
 
@@ -49,44 +55,52 @@ export default function Font() {
         <div className="flex">
           <div
             className="size-5 cursor-pointer rounded-sm border border-gray-primary"
-            style={{ backgroundColor: fontType.color }}
+            style={{ backgroundColor: fontStyle.color }}
             ref={colorPickerRef}
             onClick={() => setColorPickerOpen(true)}
           />
           <div
             className="size-5 cursor-pointer rounded-sm border border-gray-primary"
-            style={{ backgroundColor: fontType.color }}
-            ref={colorPickerRef}
-            onClick={() => setColorPickerOpen(true)}
+            style={{
+              backgroundColor: fontStyle.backgroundColor,
+              backgroundImage:
+                fontStyle.backgroundColor === 'transparent'
+                  ? 'linear-gradient(135deg, transparent 47%, red 47%, red 53%, transparent 53%)'
+                  : 'none',
+              backgroundSize: '100% 100%',
+              backgroundPosition: 'top left',
+            }}
+            ref={backgroundColorPickerRef}
+            onClick={() => setBackgroundColorPickerOpen(true)}
           />
         </div>
         <div className="flex">
           <button
             type="button"
-            className={`flex size-5 items-center justify-center border border-gray-primary text-sm italic hover:bg-brightBlue-50 ${fontType.italic ? 'bg-brightBlue-50' : ''}`}
+            className={`flex size-5 items-center justify-center border border-gray-primary text-sm italic hover:bg-brightBlue-50 ${fontStyle.italic ? 'bg-brightBlue-50' : ''}`}
             onClick={() =>
-              setFontType(prev => ({ ...prev, italic: !prev.italic }))
+              handleFontStyle({ ...fontStyle, italic: !fontStyle.italic })
             }
           >
             I
           </button>
           <button
             type="button"
-            className={`flex size-5 items-center justify-center border border-gray-primary text-sm underline hover:bg-brightBlue-50 ${fontType.underline ? 'bg-brightBlue-50' : ''}`}
+            className={`flex size-5 items-center justify-center border border-gray-primary text-sm underline hover:bg-brightBlue-50 ${fontStyle.underline ? 'bg-brightBlue-50' : ''}`}
             onClick={() =>
-              setFontType(prev => ({ ...prev, underline: !prev.underline }))
+              handleFontStyle({ ...fontStyle, underline: !fontStyle.underline })
             }
           >
             U
           </button>
           <button
             type="button"
-            className={`flex size-5 items-center justify-center border border-gray-primary text-sm line-through hover:bg-brightBlue-50 ${fontType.strikeThrough ? 'bg-brightBlue-50' : ''}`}
+            className={`flex size-5 items-center justify-center border border-gray-primary text-sm line-through hover:bg-brightBlue-50 ${fontStyle.strikeThrough ? 'bg-brightBlue-50' : ''}`}
             onClick={() =>
-              setFontType(prev => ({
-                ...prev,
-                strikeThrough: !prev.strikeThrough,
-              }))
+              handleFontStyle({
+                ...fontStyle,
+                strikeThrough: !fontStyle.strikeThrough,
+              })
             }
           >
             S
@@ -94,20 +108,20 @@ export default function Font() {
         </div>
         <div className="flex">
           <div
-            className={`flex size-5 cursor-pointer items-center justify-center border border-gray-primary hover:bg-brightBlue-50 ${fontType.align === 'left' ? 'bg-brightBlue-50' : ''}`}
-            onClick={() => setFontType(prev => ({ ...prev, align: 'left' }))}
+            className={`flex size-5 cursor-pointer items-center justify-center border border-gray-primary hover:bg-brightBlue-50 ${fontStyle.align === 'left' ? 'bg-brightBlue-50' : ''}`}
+            onClick={() => handleFontStyle({ ...fontStyle, align: 'left' })}
           >
             <MdOutlineFormatAlignLeft className="size-4" />
           </div>
           <div
-            className={`flex size-5 cursor-pointer items-center justify-center border border-gray-primary hover:bg-brightBlue-50 ${fontType.align === 'center' ? 'bg-brightBlue-50' : ''}`}
-            onClick={() => setFontType(prev => ({ ...prev, align: 'center' }))}
+            className={`flex size-5 cursor-pointer items-center justify-center border border-gray-primary hover:bg-brightBlue-50 ${fontStyle.align === 'center' ? 'bg-brightBlue-50' : ''}`}
+            onClick={() => handleFontStyle({ ...fontStyle, align: 'center' })}
           >
             <MdOutlineFormatAlignCenter className="size-4" />
           </div>
           <div
-            className={`flex size-5 cursor-pointer items-center justify-center border border-gray-primary hover:bg-brightBlue-50 ${fontType.align === 'right' ? 'bg-brightBlue-50' : ''}`}
-            onClick={() => setFontType(prev => ({ ...prev, align: 'right' }))}
+            className={`flex size-5 cursor-pointer items-center justify-center border border-gray-primary hover:bg-brightBlue-50 ${fontStyle.align === 'right' ? 'bg-brightBlue-50' : ''}`}
+            onClick={() => handleFontStyle({ ...fontStyle, align: 'right' })}
           >
             <MdOutlineFormatAlignRight className="size-4" />
           </div>
@@ -117,10 +131,10 @@ export default function Font() {
             type="text"
             className="w-8 border border-gray-primary text-center text-xs outline-none"
             id="opacity"
-            defaultValue={fontType.opacity * 100}
+            defaultValue={fontStyle.opacity! * 100}
             onChange={event => {
               const opacity = Number(event.target.value) / 100;
-              setFontType({ ...fontType, opacity });
+              handleFontStyle({ ...fontStyle, opacity });
             }}
           />
           <span className="text-xs text-gray-600">%</span>
@@ -134,9 +148,12 @@ export default function Font() {
           <input
             type="text"
             className="w-8 border border-gray-primary text-center text-xs outline-none"
-            defaultValue={fontType.size}
+            defaultValue={fontStyle.fontSize}
             onChange={event =>
-              setFontType({ ...fontType, size: Number(event.target.value) })
+              handleFontStyle({
+                ...fontStyle,
+                fontSize: Number(event.target.value),
+              })
             }
           />
           <span className="text-xs text-gray-600">px</span>
@@ -147,8 +164,18 @@ export default function Font() {
           className={`absolute z-10 pt-2 ${colorPickerOpen ? 'block' : 'hidden'}`}
         >
           <ColorPicker
-            defaultColor={fontType.color}
-            onChange={color => setFontType({ ...fontType, color })}
+            defaultColor={fontStyle.color!}
+            onChange={color => handleFontStyle({ ...fontStyle, color })}
+          />
+        </div>
+        <div
+          className={`absolute z-10 pt-2 ${backgroundColorPickerOpen ? 'block' : 'hidden'}`}
+        >
+          <ColorPicker
+            defaultColor={fontStyle.backgroundColor!}
+            onChange={color =>
+              handleFontStyle({ ...fontStyle, backgroundColor: color })
+            }
           />
         </div>
       </div>

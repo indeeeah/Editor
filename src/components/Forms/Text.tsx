@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useEffect, useRef } from 'react';
 
-import { TextProps } from '@/types/element';
+import { StyleProps } from '@/types/element';
 
 import Font from '../Edit/Font';
 import Textarea from '../Textarea';
@@ -10,11 +10,15 @@ import Textarea from '../Textarea';
 export default function TextForm({
   text,
   setText,
+  fontStyle,
+  setFontStyle,
   onFocus,
   onBlur,
 }: {
-  text: TextProps;
-  setText: (text: TextProps) => void;
+  text: string;
+  setText: (text: string) => void;
+  fontStyle: StyleProps;
+  setFontStyle: (style: StyleProps) => void;
   onFocus?: () => void;
   onBlur?: () => void;
 }) {
@@ -41,18 +45,14 @@ export default function TextForm({
 
   const handleChangeText = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
-    setText({ ...text, value });
+    setText(value);
   };
 
   return (
     <>
-      <Font />
+      <Font fontStyle={fontStyle} handleFontStyle={setFontStyle} />
       <div className="py-2">
-        <Textarea
-          ref={textareaRef}
-          text={text.value}
-          onChange={handleChangeText}
-        />
+        <Textarea ref={textareaRef} text={text} onChange={handleChangeText} />
       </div>
     </>
   );
