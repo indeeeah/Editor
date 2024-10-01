@@ -28,8 +28,14 @@ export default function Text({
 }: {
   closeVariables: () => void;
 }) {
-  const { elements, setElements, newElement, setNewElement, selectedElement } =
-    useElements();
+  const {
+    elements,
+    setElements,
+    newElement,
+    setNewElement,
+    selectedElement,
+    setSelectedElement,
+  } = useElements();
 
   const [isReadyToAdd, setIsReadyToAdd] = useState(false);
   const [text, setText] = useState<TextProps>(defaultText);
@@ -45,7 +51,8 @@ export default function Text({
       value: text.value,
     };
 
-    if (selectedElement) element.parentId = selectedElement.id;
+    const isDendent = () => selectedElement?.type === ElementType.Section;
+    if (isDendent()) element.parentId = selectedElement?.id;
 
     setNewElement(element);
   }, [elements.length, text, selectedElement, setNewElement]);
@@ -73,6 +80,7 @@ export default function Text({
     setElements(prevElements => [...prevElements, newElement as Element]);
     setText(defaultText);
     setNewElement(null);
+    setSelectedElement(null);
     closeVariables();
   };
 

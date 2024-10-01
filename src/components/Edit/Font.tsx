@@ -16,6 +16,7 @@ export default function Font() {
 
   const [colorPickerOpen, setColorPickerOpen] = useState(false);
   const [fontType, setFontType] = useState({
+    size: 16,
     bold: false,
     italic: false,
     underline: false,
@@ -133,6 +134,10 @@ export default function Font() {
           <input
             type="text"
             className="w-8 border border-gray-primary text-center text-xs outline-none"
+            defaultValue={fontType.size}
+            onChange={event =>
+              setFontType({ ...fontType, size: Number(event.target.value) })
+            }
           />
           <span className="text-xs text-gray-600">px</span>
         </div>

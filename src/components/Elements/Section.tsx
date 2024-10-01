@@ -4,6 +4,8 @@ import { convertStyle } from '@/libs/style';
 import { useElements } from '@/providers/ElementProvider';
 import { ElementProps } from '@/types/element';
 
+import Component from '../Viewer/Component';
+
 import Selected from './Selected';
 
 const Section = forwardRef<HTMLDivElement, ElementProps>(({ props }, ref) => {
@@ -13,7 +15,11 @@ const Section = forwardRef<HTMLDivElement, ElementProps>(({ props }, ref) => {
     setSelectedElement,
     isModifying,
     setIsModifying,
+    newElement,
   } = useElements();
+
+  const childNewElement =
+    newElement?.parentId === props.id ? newElement : undefined;
 
   return (
     <>
@@ -43,7 +49,14 @@ const Section = forwardRef<HTMLDivElement, ElementProps>(({ props }, ref) => {
             modify
           </button>
         </div>
-        {props.children}
+        {props.children?.map(child => {
+          const children = elements.filter(e => e.parentId === child.id);
+
+          return (
+            <Component key={child.id} props={{ element: child, children }} />
+          );
+        })}
+        {childNewElement && <Component props={{ element: childNewElement }} />}
       </div>
     </>
   );

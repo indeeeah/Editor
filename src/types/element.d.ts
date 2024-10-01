@@ -33,7 +33,8 @@ export type Element = {
   style: { [key: string]: any };
   parentId?: string;
   value?: string;
-  [key: string]: any;
+  children?: Element[];
+  [key: string]: any; // TODO: 이거 지우고 타입 정리 다시 해야됨
 };
 
 export type ElementProps = {
